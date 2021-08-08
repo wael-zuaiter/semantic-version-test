@@ -21,6 +21,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - uses: paulhatch/semantic-version@v4.0.2
+        id: versioning
         with:
           tag_prefix: "v"
           major_pattern: "(MAJOR)"
@@ -37,5 +38,5 @@ jobs:
 
       - name: push tags
         run: |
-          git tag ${version_tag} -a -m "${version}"
+          git tag ${steps.versioning.version_tag} -a -m "${steps.versioning.version}"
           git push --tags
