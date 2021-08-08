@@ -14,10 +14,12 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
       - uses: paulhatch/semantic-version@v4.0.2
         with:
           tag_prefix: "v"
@@ -27,3 +29,13 @@ jobs:
           namespace: version-project
           short_tags: false
           bump_each_commit: false
+
+      - name: setup git config
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+
+      - name: push tags
+        run: |
+          git tag ${version_tag} -m "${version}"
+          git push --tags
