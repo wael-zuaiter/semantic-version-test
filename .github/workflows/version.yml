@@ -37,5 +37,5 @@ jobs:
 
       - name: push tags
         run: |
-          git tag ${version_tag} -m "${version}"
+          git tag ${version_tag} -a -m "${version}"
           git push --tags
